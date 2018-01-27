@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -58,6 +59,15 @@ public class PTests {
         System.out.println(result);
         assertThat(result, hasSize(3));
     }
+
+    @Test
+    public void shouldFlattenAListOfList() throws Exception {
+        List<String> flatten = PTestImpl.flatten(
+                asList("a", asList("b", asList("c", "d")), "e"));
+        assertThat(flatten, hasSize(5));
+        assertThat(flatten, hasItems("a", "b", "c", "d", "e"));
+    }
+
 
 
 
