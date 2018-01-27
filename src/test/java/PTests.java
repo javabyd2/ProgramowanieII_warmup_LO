@@ -65,12 +65,13 @@ public class PTests {
     @Test
     public void shouldFlattenAListOfList() throws Exception {
         List<String> flatten = PTestImpl.flatten(
-                asList("a", asList("b", asList("c", "d")), "e"));
+                asList("a", asList("b", asList("c", "d")), "e"),
+                String.class);
         assertThat(flatten, hasSize(5));
         assertThat(flatten, hasItems("a", "b", "c", "d", "e"));
     }
 
-
+//
     @Test
     public void shouldRemoveConsecutiveDuplicatesInAList() throws Exception {
         List<String> compressedList =
@@ -89,5 +90,24 @@ public class PTests {
         assertThat(duplicates, contains("a", "a", "b",
                 "b", "c", "c", "d", "d"));
     }
+
+    @Test
+    public void shouldDuplicateElementsInAList() throws Exception {
+        List<String> duplicates =
+                PTestImpl.duplicate(Arrays.asList("a", "b", "c"), 3);
+        assertThat(duplicates, hasSize(9));
+        assertThat(duplicates, contains("a", "a",
+                "a", "b", "b", "b", "c", "c", "c"));
+    }
+
+    @Test
+    public void shouldDropEveryNthElement() throws Exception {
+        List<String> result = PTestImpl.dropEveryNth(
+                Arrays.asList("a", "b", "c", "d", "e",
+                        "f", "g", "h", "i", "j", "k"), 3);
+        assertThat(result, hasSize(8));
+        assertThat(result, contains("a", "b", "d", "e", "g", "h", "j", "k"));
+    }
+
 
 }

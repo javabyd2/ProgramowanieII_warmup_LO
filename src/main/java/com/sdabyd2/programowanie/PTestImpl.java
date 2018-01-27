@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
+
 public class PTestImpl {
 
 
@@ -37,11 +39,23 @@ public class PTestImpl {
         return Objects.equals(list, original);
     }
 
-    public static <T> List<T> flatten(List<?> list){
+    public static <T> List<T> flatten(List<?> list, Class<T> elementType){
 
-        return list.stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+        return list
+                .stream()
+                .flatMap(e -> e instanceof List ? flatten(((List<?>)
+                                e),
+                        elementType).stream() : Stream.of(e))
+                .map(e -> (T) e)
+                .collect(toList());
+    }
+
+    public static List<String> compress(List<String> list) {
+
+        Set<String> shortList = new LinkedHashSet<String>(list);
+        List<String> target = new ArrayList<>(shortList);
+
+        return target;
     }
 
 
