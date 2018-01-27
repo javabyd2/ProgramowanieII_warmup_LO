@@ -13,6 +13,7 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 public class PTests {
 
@@ -51,15 +52,15 @@ public class PTests {
         assertThat(result[1], equalTo("b"));
     }
 
-    @Test
-    public void shouldReturnAListOfThreeRandomSelectedElements() throws Exception {
-        List<String> result =
-                PTestImpl.randomSelect(
-                        Arrays.asList(
-                                "a", "b", "c", "d", "e", "f", "g", "h"), 3);
-        System.out.println(result);
-        assertThat(result, hasSize(3));
-    }
+//    @Test
+//    public void shouldReturnAListOfThreeRandomSelectedElements() throws Exception {
+//        List<String> result =
+//                PTestImpl.randomSelect(
+//                        Arrays.asList(
+//                                "a", "b", "c", "d", "e", "f", "g", "h"), 3);
+//        System.out.println(result);
+//        assertThat(result, hasSize(3));
+//    }
 
     @Test
     public void shouldFlattenAListOfList() throws Exception {
@@ -70,7 +71,23 @@ public class PTests {
     }
 
 
+    @Test
+    public void shouldRemoveConsecutiveDuplicatesInAList() throws Exception {
+        List<String> compressedList =
+                PTestImpl.compress(
+                        asList("a", "a", "a", "a", "b", "c",
+                                "c", "d", "e", "e", "e", "e"));
+        assertThat(compressedList, hasSize(5));
+        assertThat(compressedList, contains("a", "b", "c","d", "e"));
+    }
 
-
+    @Test
+    public void shouldDuplicateElementsInAList() throws Exception {
+        List<String> duplicates =
+                PTestImpl.duplicate(Arrays.asList("a", "b", "c", "d"));
+        assertThat(duplicates, hasSize(8));
+        assertThat(duplicates, contains("a", "a", "b",
+                "b", "c", "c", "d", "d"));
+    }
 
 }

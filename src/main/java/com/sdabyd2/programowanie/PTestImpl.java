@@ -1,9 +1,8 @@
 package com.sdabyd2.programowanie;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PTestImpl {
 
@@ -36,6 +35,13 @@ public class PTestImpl {
         List<T> original = new ArrayList<>(list);
         PTestImpl.reverse(list);
         return Objects.equals(list, original);
+    }
+
+    public static <T> List<T> flatten(List<?> list){
+
+        return list.stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
 
