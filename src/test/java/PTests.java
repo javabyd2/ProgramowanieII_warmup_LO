@@ -10,6 +10,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
 public class PTests {
 
@@ -36,9 +37,29 @@ public class PTests {
 
     @Test
     public void shouldReturnTrueWhenListIsPalindrome() throws Exception {
-        assertTrue(isPalindrome(
+        assertTrue(PTestImpl.isPalindrome(
                 Arrays.asList("x", "a", "m", "a", "x"))
         );
     }
+    @Test
+    public void shouldRemoveKthElementFromList() throws Exception {
+        Object[] result = PTestImpl.removeAt(
+                Arrays.asList("a", "b", "c", "d"), 2);
+        assertThat(result[0], equalTo(Arrays.asList("a", "c", "d")));
+        assertThat(result[1], equalTo("b"));
+    }
+
+    @Test
+    public void shouldReturnAListOfThreeRandomSelectedElements() throws Exception {
+        List<String> result =
+                PTestImpl.randomSelect(
+                        Arrays.asList(
+                                "a", "b", "c", "d", "e", "f", "g", "h"), 3);
+        System.out.println(result);
+        assertThat(result, hasSize(3));
+    }
+
+
+
 
 }
